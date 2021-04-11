@@ -1,0 +1,88 @@
+type Query {
+
+    # ---- Job related ----
+    job: [Job!]!
+    findJobById(id: ID!): Job!
+    searchJob(contains: String!): [Job!]!
+    # ---- Company related ----
+    company: [Company!]!
+    findCompanyById(id: ID!): Company!
+    findCompanyByName(name: String!): [Company!]!
+}
+
+type Mutation {
+    login(email: String!, password: String!): Payload!
+    # ---- job related ----
+    createJob(jobInput: JobInput, companyId: ID!): Job! # or we can extract id from Header and use it as CompanyId
+    updateJob(id: ID!, updateInput: UpdateInput!, companyId: ID! ):Boolean!
+    deleteJob(id: ID!): Boolean!
+
+    # ---- comapany related ----
+    createCompany(companyInput: CompanyInput!, jobInput: JobInput): Company!
+}
+
+
+type Job {
+    id: ID!
+    title: String!
+    description: String!
+    role: String
+    position:String
+    commitment: Commitment
+    company: Company
+}
+
+type Company {
+    id: ID!
+    name: String!
+    job: [Job]
+    logoUrl: String
+}
+
+type Payload {
+    accessToken: String!
+    refreshToken: String!
+}
+# type NotFound {
+#     error: String!
+# }
+
+
+
+# ---------------ENUMS type---------------
+enum Commitment {
+    FULLTIME
+    PARTTIME
+}
+
+
+
+# ---------------UNIONS type--------------
+# union JobOrError = Job | NotFound
+
+
+
+
+# ---------------INPUT type---------------
+
+input JobInput {
+    title: String!
+    description: String!
+    role: String!
+    position: String
+    commitment: Commitment
+}
+
+input UpdateInput {
+    title: String
+    description: String
+    role: String
+    position: String
+    commitment: Commitment
+}
+
+input CompanyInput {
+    name: String!
+    email: String!
+    logoUrl: String
+}
