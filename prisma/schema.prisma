@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int    @default(autoincrement())
+  email    String @unique @db.VarChar
+  hashPass String @db.VarChar
+  role     String @default("user")
+}
+
+model Company {
+  id    String @unique @default(cuid())
+  name  String
+  email String @unique
+  job   Job[]
+}
+
+model Job {
+  id          String     @unique @default(uuid())
+  title       String
+  description String
+  role        String
+  position    String?
+  commitment  Commitment?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  Company     Company?   @relation(fields: [companyId], references: [id])
+  companyId   String?
+}
+
+enum Commitment {
+  FULLTIME
+  PARTTIME
+}
