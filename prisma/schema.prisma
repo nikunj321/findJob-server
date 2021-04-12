@@ -18,22 +18,23 @@ model User {
 }
 
 model Company {
-  id    String @unique @default(cuid())
-  name  String
-  email String @unique
-  job   Job[]
+  id      String @unique @default(cuid())
+  name    String
+  email   String @unique
+  logoUrl String @db.VarChar
+  job     Job[]
 }
 
 model Job {
-  id          String     @unique @default(uuid())
+  id          String      @unique @default(uuid())
   title       String
   description String
   role        String
   position    String?
   commitment  Commitment?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now())
-  Company     Company?   @relation(fields: [companyId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+  Company     Company?    @relation(fields: [companyId], references: [id])
   companyId   String?
 }
 
