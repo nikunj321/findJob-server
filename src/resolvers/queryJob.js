@@ -1,17 +1,17 @@
 module.exports = {
     Query: {
         job: async (_, args, { prisma }) => {
-            try {
-                const allJob = await prisma.job.findMany({
-                    include: {
-                        company: true
-                    }
-                });
-                return allJob;
-            }
-            catch (error) {
-                throw new Error("could not find any job")
-            }
+            // try {
+            const allJob = await prisma.job.findMany({
+                include: {
+                    company: true
+                }
+            });
+            return allJob;
+            // }
+            // catch (error) {
+            //     throw new Error("could not find any job")
+            // }
         },
         findJobById: async (_, { id }, { prisma }) => {
             try {

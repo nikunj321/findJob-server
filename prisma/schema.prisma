@@ -34,7 +34,7 @@ model Job {
   commitment  Commitment?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now())
-  Company     Company?    @relation(fields: [companyId], references: [id])
+  company     Company?    @relation(fields: [companyId], references: [id])
   companyId   String?
 }
 
