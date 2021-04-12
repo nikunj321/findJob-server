@@ -1,6 +1,6 @@
 const { sign } = require('jsonwebtoken');
 
-export const issueRefreshToken = (payload) => {
+const issueRefreshToken = (payload) => {
     return sign(
         payload,
         process.env.REFRESH_TOKEN_SECRET,
@@ -9,4 +9,8 @@ export const issueRefreshToken = (payload) => {
             expiresIn: "7d"
         }
     )
+}
+
+module.exports = {
+    issueRefreshToken
 }

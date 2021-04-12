@@ -1,7 +1,7 @@
 const { sign } = require('jsonwebtoken');
 
 
-export const issueAccessToken = (payload) => {
+const issueAccessToken = (payload) => {
     return sign(
         payload,
         process.env.ACCESS_TOKEN_SECRET,
@@ -10,4 +10,9 @@ export const issueAccessToken = (payload) => {
             expiresIn: "5m"
         }
     )
+}
+
+
+module.exports = {
+    issueAccessToken
 }
