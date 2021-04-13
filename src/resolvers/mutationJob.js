@@ -10,8 +10,7 @@ module.exports = {
                 include: {
                     company: true
                 }
-            })
-
+            });
 
             return newJob;
         },

@@ -21,7 +21,8 @@ module.exports = {
 
             const user = await prisma.company.findUnique({ where: { email } });
             const payload = {
-                id: user.id
+                id: user.id,
+                role: ["company"]
             }
 
             return {

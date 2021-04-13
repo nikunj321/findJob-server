@@ -1,19 +1,35 @@
 const { rule } = require('graphql-shield');
 
-export const isAuthenticated = rule()(async (parent, args, { user }) => {
-    // if user === Null 
-    if (!user) {
-        return false;
-    }
+const isAuthenticated = rule({ cache: "contextual" })(
+    async (parent, args, { user }) => {
+        // if user === Null 
+        if (!user) {
+            return false;
+        }
+        return true;
+    });
 
-    return true;
-});
-
-export const checkPermission = (user, permission) => {
-
+const checkPermission = (user, permission) => {
     if (user) {
-        return user.permission.includes(permission);
+        return user["role"].includes(permission);
     }
-
     return false;
+}
+
+const onlyCompany = rule()(
+    (parent, args, { user }) => {
+        return checkPermission(user, "company");
+    }
+)
+
+const onlyUser = rule()(
+    (_, args, { user }) => {
+        return checkPermission(user, "user");
+    }
+)
+
+module.exports = {
+    isAuthenticated,
+    onlyCompany,
+    onlyUser
 }

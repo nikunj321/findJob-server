@@ -1,10 +1,12 @@
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, makeExecutableSchema } = require('apollo-server-express');
 const express = require('express');
 const { PrismaClient } = require('@prisma/client')
 const fs = require('fs');
 const path = require('path');
 const expressJwt = require('express-jwt');
+const { applyMiddleware } = require('graphql-middleware')
 
+const permission = require('./permissions/permission');
 
 /**
  *      Importing resolvers
@@ -14,6 +16,7 @@ const mutationJob = require('./resolvers/mutationJob');
 const mutationCompany = require('./resolvers/mutationCompany');
 const queryCompany = require('./resolvers/queryComapny');
 const mutationLogin = require('./resolvers/mutationLogin');
+const mutationUser = require('./resolvers/mutationUser');
 
 /**
  * constants
@@ -26,7 +29,8 @@ const resolvers = [
     queryCompany,
     mutationJob,
     mutationCompany,
-    mutationLogin
+    mutationLogin,
+    mutationUser
 ]
 
 const typeDefs = fs.readFileSync(
@@ -49,8 +53,13 @@ app.use(
 
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: applyMiddleware(
+        makeExecutableSchema({
+            typeDefs,
+            resolvers
+        }),
+        permission
+    ),
     context: ({ req }) => {
         const user = req.user || null;
         return { user, prisma }

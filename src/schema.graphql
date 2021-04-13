@@ -1,5 +1,5 @@
 type Query {
-
+    user: String!
     # ---- Job related ----
     job: [Job!]!
     findJobById(id: ID!): Job!
@@ -11,6 +11,8 @@ type Query {
 }
 
 type Mutation {
+    signUpUser(email:String!, password: String!): Boolean!
+    loginUser(email: String!, password: String!): Payload!
     login(email: String!, password: String!): Payload!
     # ---- job related ----
     createJob(jobInput: JobInput, companyId: ID!): Job! # or we can extract id from Header and use it as CompanyId
