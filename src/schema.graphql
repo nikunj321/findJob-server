@@ -21,6 +21,8 @@ type Mutation {
 
     # ---- comapany related ----
     createCompany(companyInput: CompanyInput!, jobInput: JobInput): Company!
+    askQuestion(title:String!, companyId: ID!): Question!
+    answerQuestion(answer:String!, questionId: ID!): Answer!
 }
 
 
@@ -39,6 +41,18 @@ type Company {
     name: String!
     job: [Job]
     logoUrl: String
+    question: [Question]
+}
+
+type Question {
+    id: ID!
+    title: String!
+    answer: [Answer]
+}
+
+type Answer {
+    id: ID!
+    answer: String!
 }
 
 type Payload {

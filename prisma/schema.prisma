@@ -18,11 +18,12 @@ model User {
 }
 
 model Company {
-  id      String @unique @default(cuid())
-  name    String
-  email   String @unique
-  logoUrl String @db.VarChar
-  job     Job[]
+  id       String     @unique @default(cuid())
+  name     String
+  email    String     @unique
+  logoUrl  String     @db.VarChar
+  job      Job[]
+  question Question[]
 }
 
 model Job {
@@ -41,4 +42,19 @@ model Job {
 enum Commitment {
   FULLTIME
   PARTTIME
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  title     String
+  answer    Answer[]
+  company   Company? @relation(fields: [companyId], references: [id])
+  companyId String?
+}
+
+model Answer {
+  id         Int       @id @default(autoincrement())
+  answer     String
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
 }

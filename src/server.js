@@ -17,6 +17,8 @@ const mutationCompany = require('./resolvers/mutationCompany');
 const queryCompany = require('./resolvers/queryComapny');
 const mutationLogin = require('./resolvers/mutationLogin');
 const mutationUser = require('./resolvers/mutationUser');
+const mutationQuestion = require('./resolvers/mutationQuestion');
+
 
 /**
  * constants
@@ -30,7 +32,8 @@ const resolvers = [
     mutationJob,
     mutationCompany,
     mutationLogin,
-    mutationUser
+    mutationUser,
+    mutationQuestion,
 ]
 
 const typeDefs = fs.readFileSync(

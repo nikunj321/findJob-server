@@ -1,4 +1,4 @@
-const { shield, and, } = require('graphql-shield');
+const { shield, and, not } = require('graphql-shield');
 const { isAuthenticated, onlyCompany, onlyUser, ownJobOnly } = require('./authUtils');
 
 
@@ -9,6 +9,8 @@ module.exports = shield({
     Mutation: {
         updateJob: and(isAuthenticated, onlyCompany, ownJobOnly),
         deleteJob: and(isAuthenticated, onlyCompany, ownJobOnly),
-        createJob: and(isAuthenticated, onlyCompany)
+        createJob: and(isAuthenticated, onlyCompany),
+        askQuestion: isAuthenticated,
+        answerQuestion: isAuthenticated,
     }
 })

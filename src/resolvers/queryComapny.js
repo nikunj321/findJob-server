@@ -3,7 +3,7 @@ module.exports = {
         company: async (_, args, { prisma }) => {
             const allCompany = await prisma.company.findMany({
                 include: {
-                    job: true
+                    job: true,
                 }
             });
 
@@ -12,7 +12,14 @@ module.exports = {
         findCompanyById: async (_, { id }, { prisma }) => {
             const theComapany = await prisma.company.findUnique({
                 where: { id },
-                include: { job: true }
+                include: {
+                    job: true,
+                    question: {
+                        include: {
+                            answer: true
+                        }
+                    }
+                }
             });
             return theComapany;
         },
