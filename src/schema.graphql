@@ -8,6 +8,9 @@ type Query {
     company: [Company!]!
     findCompanyById(id: ID!): Company!
     findCompanyByName(name: String!): [Company!]!
+
+    # ---- Question related ----
+    searchQuestion(keyword: String!, companyId: ID!): [Question]
 }
 
 type Mutation {
@@ -21,8 +24,11 @@ type Mutation {
 
     # ---- comapany related ----
     createCompany(companyInput: CompanyInput!, jobInput: JobInput): Company!
+
+    # ---- question related ----
     askQuestion(title:String!, companyId: ID!): Question!
     answerQuestion(answer:String!, questionId: ID!): Answer!
+    
 }
 
 

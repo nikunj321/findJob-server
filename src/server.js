@@ -12,6 +12,7 @@ const permission = require('./permissions/permission');
  *      Importing resolvers
  */
 const queryJob = require('./resolvers/queryJob');
+const queryQuestion = require('./resolvers/queryQuestion');
 const mutationJob = require('./resolvers/mutationJob');
 const mutationCompany = require('./resolvers/mutationCompany');
 const queryCompany = require('./resolvers/queryComapny');
@@ -29,6 +30,7 @@ const prisma = new PrismaClient();
 const resolvers = [
     queryJob,
     queryCompany,
+    queryQuestion,
     mutationJob,
     mutationCompany,
     mutationLogin,
