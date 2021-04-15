@@ -28,8 +28,27 @@ const onlyUser = rule()(
     }
 )
 
+const ownJobOnly = rule()(
+    async (_, { id }, { user, prisma }) => {
+        const existJob = await prisma.job.findFirst({
+            where: { id }
+        });
+
+        if (!existJob) {
+            return false;
+        }
+
+        if (existJob.compayId !== user.id) {
+            return false;
+        }
+
+        return true;
+    }
+)
+
 module.exports = {
     isAuthenticated,
     onlyCompany,
-    onlyUser
+    onlyUser,
+    ownJobOnly
 }
